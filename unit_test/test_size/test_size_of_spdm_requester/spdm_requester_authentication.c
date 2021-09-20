@@ -32,13 +32,16 @@ spdm_authentication(IN void *context, OUT uint8 *slot_mask,
 		    IN OUT uintn *cert_chain_size, OUT void *cert_chain,
 		    IN uint8 measurement_hash_type, OUT void *measurement_hash)
 {
-	return_status status;
+	return_status status = RETURN_SUCCESS;
 
+	#if SPDM_ENABLE_GET_DIGESTS
 	status = spdm_get_digest(context, slot_mask, total_digest_buffer);
 	if (RETURN_ERROR(status)) {
 		return status;
 	}
+	#endif // SPDM_ENABLE_GET_DIGESTS
 
+	#if SPDM_ENABLE_GET_CERTIFICATE
 	if (slot_id != 0xFF) {
 		status = spdm_get_certificate(context, slot_id, cert_chain_size,
 					      cert_chain);
@@ -46,13 +49,16 @@ spdm_authentication(IN void *context, OUT uint8 *slot_mask,
 			return status;
 		}
 	}
+	#endif // SPDM_ENABLE_GET_CERTIFICATE
 
+	#if SPDM_ENABLE_CHALLENGE
 	status = spdm_challenge(context, slot_id, measurement_hash_type,
 				measurement_hash);
 	if (RETURN_ERROR(status)) {
 		return status;
 	}
-	return RETURN_SUCCESS;
+	#endif // SPDM_ENABLE_CHALLENGE
+	return status;
 }
 
 /**

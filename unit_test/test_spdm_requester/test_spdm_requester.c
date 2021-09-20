@@ -10,9 +10,19 @@
 int spdm_requester_get_version_test_main(void);
 int spdm_requester_get_capabilities_test_main(void);
 int spdm_requester_negotiate_algorithms_test_main(void);
+
+#if SPDM_ENABLE_GET_DIGESTS
 int spdm_requester_get_digests_test_main(void);
+#endif // SPDM_ENABLE_GET_CERTIFICATE
+
+#if SPDM_ENABLE_GET_CERTIFICATE
 int spdm_requester_get_certificate_test_main(void);
+#endif // SPDM_ENABLE_GET_CERTIFICATE
+
+#if SPDM_ENABLE_CHALLENGE
 int spdm_requester_challenge_test_main(void);
+#endif // SPDM_ENABLE_CHALLENGE
+
 int spdm_requester_get_measurements_test_main(void);
 int spdm_requester_key_exchange_test_main(void);
 int spdm_requester_finish_test_main(void);
@@ -36,18 +46,23 @@ int main(void)
 	if (spdm_requester_negotiate_algorithms_test_main() != 0) {
 		return_value = 1;
 	}
-
+	#if SPDM_ENABLE_GET_DIGESTS
 	if (spdm_requester_get_digests_test_main() != 0) {
 		return_value = 1;
 	}
+	#endif // SPDM_ENABLE_GET_DIGESTS
 
+	#if SPDM_ENABLE_GET_CERTIFICATE
 	if (spdm_requester_get_certificate_test_main() != 0) {
 		return_value = 1;
 	}
+	#endif // SPDM_ENABLE_GET_CERTIFICATE
 
+	#if SPDM_ENABLE_CHALLENGE
 	if (spdm_requester_challenge_test_main() != 0) {
 		return_value = 1;
 	}
+	#endif // SPDM_ENABLE_CHALLENGE
 
 	if (spdm_requester_get_measurements_test_main() != 0) {
 		return_value = 1;

@@ -330,6 +330,11 @@ typedef struct {
 #define SPDM_REGISTRY_ID_CXL 7
 #define SPDM_REGISTRY_ID_JEDEC 8
 
+#define SPDM_ENABLE_GET_DIGESTS (1)
+#define SPDM_ENABLE_GET_CERTIFICATE (1)
+#define SPDM_ENABLE_CHALLENGE (1)
+
+#if SPDM_ENABLE_GET_DIGESTS
 ///
 /// SPDM GET_DIGESTS request
 ///
@@ -348,6 +353,10 @@ typedef struct {
 	// param2 == slot_mask
 	//uint8                digest[digest_size][slot_count];
 } spdm_digest_response_t;
+
+#endif // SPDM_ENABLE_GET_DIGESTS
+
+#if SPDM_ENABLE_GET_CERTIFICATE
 
 ///
 /// SPDM GET_CERTIFICATE request
@@ -372,6 +381,8 @@ typedef struct {
 	//uint8                cert_chain[portion_length];
 } spdm_certificate_response_t;
 
+#endif // SPDM_ENABLE_GET_CERTIFICATE
+
 typedef struct {
 	//
 	// Total length of the certificate chain, in bytes,
@@ -393,6 +404,8 @@ typedef struct {
 	//uint8    certificates[length - 4 - hash_size];
 } spdm_cert_chain_t;
 
+#if SPDM_ENABLE_CHALLENGE
+
 ///
 /// SPDM CHALLENGE request
 ///
@@ -402,13 +415,6 @@ typedef struct {
 	// param2 == HashType
 	uint8 nonce[32];
 } spdm_challenge_request_t;
-
-///
-/// SPDM CHALLENGE request HashType
-///
-#define SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH 0
-#define SPDM_CHALLENGE_REQUEST_TCB_COMPONENT_MEASUREMENT_HASH 1
-#define SPDM_CHALLENGE_REQUEST_ALL_MEASUREMENTS_HASH 0xFF
 
 ///
 /// SPDM CHALLENGE response
@@ -424,6 +430,15 @@ typedef struct {
 	//uint8                opaque_data[opaque_length];
 	//uint8                signature[key_size];
 } spdm_challenge_auth_response_t;
+
+#endif // SPDM_ENABLE_CHALLENGE
+
+///
+/// SPDM CHALLENGE request HashType
+///
+#define SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH 0
+#define SPDM_CHALLENGE_REQUEST_TCB_COMPONENT_MEASUREMENT_HASH 1
+#define SPDM_CHALLENGE_REQUEST_ALL_MEASUREMENTS_HASH 0xFF
 
 typedef struct {
 	uint8 slot_id : 4;

@@ -6,6 +6,9 @@
 
 #include "spdm_responder_lib_internal.h"
 
+
+#if SPDM_ENABLE_CHALLENGE
+
 /**
   Process the SPDM CHALLENGE request and return the response.
 
@@ -215,3 +218,5 @@ return_status spdm_get_response_challenge_auth(IN void *context,
 
 	return RETURN_SUCCESS;
 }
+
+#endif

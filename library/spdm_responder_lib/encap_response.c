@@ -46,12 +46,21 @@ typedef struct {
 } spdm_encap_response_struct_t;
 
 spdm_encap_response_struct_t m_encap_response_struct[] = {
+	#if SPDM_ENABLE_GET_DIGESTS
 	{ SPDM_GET_DIGESTS, spdm_get_encap_request_get_digest,
 	  spdm_process_encap_response_digest },
+	#endif // SPDM_ENABLE_GET_DIGESTS
+
+	#if SPDM_ENABLE_GET_CERTIFICATE
 	{ SPDM_GET_CERTIFICATE, spdm_get_encap_request_get_certificate,
 	  spdm_process_encap_response_certificate },
+	#endif // SPDM_ENABLE_GET_CERTIFICATE
+
+	#if SPDM_ENABLE_CHALLENGE
 	{ SPDM_CHALLENGE, spdm_get_encap_request_challenge,
 	  spdm_process_encap_response_challenge_auth },
+	#endif // SPDM_ENABLE_CHALLENGE
+
 	{ SPDM_KEY_UPDATE, spdm_get_encap_request_key_update,
 	  spdm_process_encap_response_key_update },
 };

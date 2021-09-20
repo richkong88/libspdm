@@ -6,6 +6,8 @@
 
 #include "spdm_responder_lib_internal.h"
 
+#if SPDM_ENABLE_GET_DIGESTS
+
 /**
   Get the SPDM encapsulated GET_DIGESTS request.
 
@@ -155,3 +157,5 @@ return_status spdm_process_encap_response_digest(
 
 	return RETURN_SUCCESS;
 }
+
+#endif // SPDM_ENABLE_GET_DIGESTS
